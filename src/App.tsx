@@ -11,6 +11,7 @@ import RemindersPage from "./pages/RemindersPage";
 import TemplatesPage from "./pages/TemplatesPage";
 import PatientsPage from "./pages/PatientsPage";
 import SettingsPage from "./pages/SettingsPage";
+import TestMessagingPage from "./pages/TestMessagingPage";
 import Layout from "./components/Layout";
 import { AuthProvider } from "./contexts/AuthContext";
 
@@ -37,6 +38,7 @@ const App = () => (
               <Route path="reminders" element={<RemindersPage />} />
               <Route path="templates" element={<TemplatesPage />} />
               <Route path="patients" element={<PatientsPage />} />
+              <Route path="test-messaging" element={<TestMessagingPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="*" element={<NotFound />} />
             </Route>

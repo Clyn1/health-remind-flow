@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -12,7 +11,8 @@ import {
   LogOut,
   Menu,
   X,
-  LayoutDashboard
+  LayoutDashboard,
+  TestTube
 } from "lucide-react";
 import LoginForm from "./auth/LoginForm";
 
@@ -30,6 +30,7 @@ const Layout = () => {
     { path: "/reminders", icon: <BellRing className="mr-2 h-4 w-4" />, label: "Reminders" },
     { path: "/templates", icon: <FileText className="mr-2 h-4 w-4" />, label: "Templates" },
     { path: "/patients", icon: <Users className="mr-2 h-4 w-4" />, label: "Patients" },
+    { path: "/test-messaging", icon: <TestTube className="mr-2 h-4 w-4" />, label: "Test Messaging" },
     { path: "/settings", icon: <Settings className="mr-2 h-4 w-4" />, label: "Settings" },
   ];
   
