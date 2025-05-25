@@ -15,36 +15,92 @@ import {
   LayoutDashboard,
   TestTube,
   Stethoscope,
-  Activity
+  Activity,
+  AlertCircle
 } from "lucide-react";
 import LoginForm from "./auth/LoginForm";
 
 const Layout = () => {
-  const { user, signOut } = useAuth();
+  const { user, userProfile, signOut, loading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   
-  const navItems = [
-    { path: "/", icon: <LayoutDashboard className="mr-3 h-5 w-5" />, label: "Dashboard" },
-    { path: "/appointments", icon: <CalendarDays className="mr-3 h-5 w-5" />, label: "Appointments" },
-    { path: "/reminders", icon: <BellRing className="mr-3 h-5 w-5" />, label: "Reminders" },
-    { path: "/templates", icon: <FileText className="mr-3 h-5 w-5" />, label: "Templates" },
-    { path: "/patients", icon: <Users className="mr-3 h-5 w-5" />, label: "Patients" },
-    { path: "/test-messaging", icon: <TestTube className="mr-3 h-5 w-5" />, label: "Test Messaging" },
-    { path: "/settings", icon: <Settings className="mr-3 h-5 w-5" />, label: "Settings" },
-  ];
+  // Define navigation items based on user role
+  const getNavItems = () => {
+    const role = userProfile?.role;
+    
+    const baseItems = [
+      { path: "/", icon: <LayoutDashboard className="mr-3 h-5 w-5" />, label: "Dashboard", roles: ['admin', 'doctor', 'patient'] },
+    ];
+
+    const adminDoctorItems = [
+      { path: "/appointments", icon: <CalendarDays className="mr-3 h-5 w-5" />, label: "Appointments", roles: ['admin', 'doctor'] },
+      { path: "/reminders", icon: <BellRing className="mr-3 h-5 w-5" />, label: "Reminders", roles: ['admin', 'doctor'] },
+      { path: "/templates", icon: <FileText className="mr-3 h-5 w-5" />, label: "Templates", roles: ['admin', 'doctor'] },
+      { path: "/patients", icon: <Users className="mr-3 h-5 w-5" />, label: "Patients", roles: ['admin', 'doctor'] },
+      { path: "/test-messaging", icon: <TestTube className="mr-3 h-5 w-5" />, label: "Test Messaging", roles: ['admin', 'doctor'] },
+    ];
+
+    const settingsItem = [
+      { path: "/settings", icon: <Settings className="mr-3 h-5 w-5" />, label: "Settings", roles: ['admin', 'doctor', 'patient'] },
+    ];
+
+    const allItems = [...baseItems, ...adminDoctorItems, ...settingsItem];
+    
+    return allItems.filter(item => 
+      !role || item.roles.includes(role as any)
+    );
+  };
   
   const handleLogout = async () => {
-    await signOut();
-    navigate("/");
+    try {
+      await signOut();
+      navigate("/");
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-green-50">
+        <div className="text-center">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-green-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Stethoscope className="h-5 w-5 text-white animate-pulse" />
+          </div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
   
   if (!user) {
     return <LoginForm />;
   }
+
+  // Show message if profile is missing
+  if (!userProfile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-green-50">
+        <div className="text-center max-w-md">
+          <AlertCircle className="h-12 w-12 text-amber-500 mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">Profile Setup Required</h2>
+          <p className="text-gray-600 mb-4">
+            Your user profile is being set up. Please refresh the page or contact support if this persists.
+          </p>
+          <Button onClick={() => window.location.reload()}>
+            Refresh Page
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const navItems = getNavItems();
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
@@ -73,7 +129,10 @@ const Layout = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-800">HealthRemind</h1>
-                <p className="text-sm text-blue-600 font-medium">Pro Care System</p>
+                <p className="text-sm text-blue-600 font-medium">
+                  {userProfile.role === 'admin' ? 'Admin Portal' : 
+                   userProfile.role === 'doctor' ? 'Doctor Portal' : 'Patient Portal'}
+                </p>
               </div>
             </div>
             <div className="flex items-center text-xs text-gray-500 bg-green-50 px-3 py-2 rounded-lg">
@@ -106,12 +165,17 @@ const Layout = () => {
               <div className="flex items-center mb-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center mr-3">
                   <span className="text-white text-sm font-bold">
-                    {user?.email?.charAt(0).toUpperCase()}
+                    {userProfile.first_name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase()}
                   </span>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-800">Dr. Admin</p>
-                  <p className="text-xs text-gray-500">{user?.email}</p>
+                  <p className="text-sm font-medium text-gray-800">
+                    {userProfile.first_name && userProfile.last_name 
+                      ? `${userProfile.first_name} ${userProfile.last_name}`
+                      : 'User'
+                    }
+                  </p>
+                  <p className="text-xs text-gray-500 capitalize">{userProfile.role}</p>
                 </div>
               </div>
             </div>
@@ -152,7 +216,7 @@ const Layout = () => {
               </div>
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-green-500 rounded-xl flex items-center justify-center">
                 <span className="text-white text-sm font-bold">
-                  {user?.email?.charAt(0).toUpperCase()}
+                  {userProfile.first_name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase()}
                 </span>
               </div>
             </div>
