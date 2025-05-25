@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -33,22 +32,22 @@ const Layout = () => {
     const role = userProfile?.role;
     
     const baseItems = [
-      { path: "/", icon: <LayoutDashboard className="mr-3 h-5 w-5" />, label: "Dashboard", roles: ['admin', 'doctor', 'patient'] },
+      { path: "/", icon: <LayoutDashboard className="mr-3 h-5 w-5" />, label: "Dashboard", roles: ['admin', 'doctor', 'nurse', 'patient'] },
     ];
 
-    const adminDoctorItems = [
-      { path: "/appointments", icon: <CalendarDays className="mr-3 h-5 w-5" />, label: "Appointments", roles: ['admin', 'doctor'] },
-      { path: "/reminders", icon: <BellRing className="mr-3 h-5 w-5" />, label: "Reminders", roles: ['admin', 'doctor'] },
-      { path: "/templates", icon: <FileText className="mr-3 h-5 w-5" />, label: "Templates", roles: ['admin', 'doctor'] },
-      { path: "/patients", icon: <Users className="mr-3 h-5 w-5" />, label: "Patients", roles: ['admin', 'doctor'] },
+    const adminDoctorNurseItems = [
+      { path: "/appointments", icon: <CalendarDays className="mr-3 h-5 w-5" />, label: "Appointments", roles: ['admin', 'doctor', 'nurse'] },
+      { path: "/reminders", icon: <BellRing className="mr-3 h-5 w-5" />, label: "Reminders", roles: ['admin', 'doctor', 'nurse'] },
+      { path: "/templates", icon: <FileText className="mr-3 h-5 w-5" />, label: "Templates", roles: ['admin', 'doctor', 'nurse'] },
+      { path: "/patients", icon: <Users className="mr-3 h-5 w-5" />, label: "Patients", roles: ['admin', 'doctor', 'nurse'] },
       { path: "/test-messaging", icon: <TestTube className="mr-3 h-5 w-5" />, label: "Test Messaging", roles: ['admin', 'doctor'] },
     ];
 
     const settingsItem = [
-      { path: "/settings", icon: <Settings className="mr-3 h-5 w-5" />, label: "Settings", roles: ['admin', 'doctor', 'patient'] },
+      { path: "/settings", icon: <Settings className="mr-3 h-5 w-5" />, label: "Settings", roles: ['admin', 'doctor', 'nurse', 'patient'] },
     ];
 
-    const allItems = [...baseItems, ...adminDoctorItems, ...settingsItem];
+    const allItems = [...baseItems, ...adminDoctorNurseItems, ...settingsItem];
     
     return allItems.filter(item => 
       !role || item.roles.includes(role as any)
@@ -102,6 +101,16 @@ const Layout = () => {
 
   const navItems = getNavItems();
 
+  const getRoleDisplayName = (role: string) => {
+    switch (role) {
+      case 'admin': return 'Admin Portal';
+      case 'doctor': return 'Doctor Portal';
+      case 'nurse': return 'Nurse Portal';
+      case 'patient': return 'Patient Portal';
+      default: return 'Portal';
+    }
+  };
+
   return (
     <div className="flex h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
       {/* Mobile sidebar toggle */}
@@ -130,8 +139,7 @@ const Layout = () => {
               <div>
                 <h1 className="text-xl font-bold text-gray-800">HealthRemind</h1>
                 <p className="text-sm text-blue-600 font-medium">
-                  {userProfile.role === 'admin' ? 'Admin Portal' : 
-                   userProfile.role === 'doctor' ? 'Doctor Portal' : 'Patient Portal'}
+                  {getRoleDisplayName(userProfile.role)}
                 </p>
               </div>
             </div>
