@@ -39,7 +39,6 @@ CareLink was developed through strategic prompt engineering to solve a real-worl
 
 ## 📚 Presentation & Testing (10%)
 
-* [Editable Canva Pitch Deck](https://www.canva.com/design/DAF-EyiUevQ/E4Lz8JbIQrOEVkO7PG7B2g/edit) created with all required sections
 * Clear README included for judges and collaborators
 * Backend routes tested for SMS, auth, and message logs
 * Features validated across user roles and delivery channels
