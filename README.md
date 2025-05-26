@@ -1,73 +1,53 @@
-# Welcome to your Lovable project
+# README: CareLink - HealthTech Follow-Up Reminder System
 
-## Project info
+## 🔍 Prompt Engineering (25%)
 
-**URL**: https://lovable.dev/projects/3a81c4c7-2220-4440-9ade-a1c4c1696256
+CareLink was developed through strategic prompt engineering to solve a real-world healthcare problem: missed follow-up appointments. Prompts were carefully designed to:
 
-## How can I edit this code?
+* Replace Twilio with a reliable, region-specific messaging API (e.g., Africa’s Talking)
+* Design an intuitive, role-based UI with Tailwind CSS
+* Ensure backend and frontend integration remained intact during UI changes
+* Provide scalable prompts that work across system architecture, UX, and business logic
 
-There are several ways of editing your application.
+## 🎨 Aesthetic Appeal & Vibes (20%)
 
-**Use Lovable**
+* The UI/UX is built using Tailwind CSS for a clean, modern healthcare design
+* Calming blue and green color palette ensures accessibility and brand alignment
+* Mobile-first design, responsive layout, consistent spacing and visual hierarchy
+* Placeholder animations and auditory feedback potential planned for final version
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3a81c4c7-2220-4440-9ade-a1c4c1696256) and start prompting.
+## 🧠 Technical Creativity & Flow (20%)
 
-Changes made via Lovable will be committed automatically to this repo.
+* Replaced Twilio with Africa’s Talking for local SMS delivery
+* Role-based dashboards using conditionally rendered components
+* Modular code with clean folder structure and separation of concerns
+* Creative fallback logic: if SMS fails, attempt WhatsApp or alternative route
 
-**Use your preferred IDE**
+## ⚡ Rapid Prototyping & Execution (15%)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+* Functional prototype developed within short timeline using React and Node.js
+* Fast integration of messaging, authentication, and role-based routing
+* Canva pitch deck and UI mockups created simultaneously with live code
+* Resolved roadblocks by replacing broken dependencies and redesigning UI without losing logic
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🔐 Security & Fault Tolerance (10%)
 
-Follow these steps:
+* Backend protected with environment variables and secure API key storage
+* Role-based access control limits patient, doctor, and admin access
+* Message dispatch audit logs and retry logic implemented
+* Prepared for GDPR/HIPAA compliance with encrypted messaging routes
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 📚 Presentation & Testing (10%)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+* [Editable Canva Pitch Deck](https://www.canva.com/design/DAF-EyiUevQ/E4Lz8JbIQrOEVkO7PG7B2g/edit) created with all required sections
+* Clear README included for judges and collaborators
+* Backend routes tested for SMS, auth, and message logs
+* Features validated across user roles and delivery channels
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+**Project Goal:** To ensure that no patient falls through the cracks by delivering intelligent, automated follow-up reminders to both patients and doctors via accessible messaging platforms.
 
-**Edit a file directly in GitHub**
+**Tech Stack:** React · Node.js/Python · Tailwind CSS · Africa's Talking API · Firebase/PostgreSQL
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/3a81c4c7-2220-4440-9ade-a1c4c1696256) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+**Contributors:** Clinton Ochieng (Lead Developer, Prompt Engineer, UI/UX Designer)
